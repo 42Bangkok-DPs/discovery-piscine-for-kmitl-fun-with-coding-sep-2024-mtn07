@@ -1,3 +1,3 @@
 for dir in "$@"; do
-  mkdir 'ex$dir'
+  mkdir "ex$dir"
 done
