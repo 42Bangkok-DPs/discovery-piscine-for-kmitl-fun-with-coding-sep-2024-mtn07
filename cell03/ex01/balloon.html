@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Balloon</title>
+</head>
+<body>
+    <div id="balloon" class="balloon"></div>
+
+    <script>
+        const balloon = document.getElementById('balloon');
+
+        const colors = ['red', 'green', 'blue'];
+        let colorIndex = 0;
+
+        function changeColor() {
+            colorIndex = (colorIndex + 1) % colors.length;
+            balloon.style.backgroundColor = colors[colorIndex];
+        }
+
+        function shrinkBalloon() {
+            const currentSize = parseInt(getComputedStyle(balloon).width);
+            if (currentSize > 200) {
+                balloon.style.width = (currentSize - 5) + 'px';
+                balloon.style.height = (currentSize - 5) + 'px';
+                colorIndex = (colorIndex - 1 + colors.length) % colors.length; 
+                balloon.style.backgroundColor = colors[colorIndex];
+            }
+        }
+
+        balloon.addEventListener('click', () => {
+            const currentSize = parseInt(getComputedStyle(balloon).width);
+            if (currentSize >= 420) {
+                balloon.style.width = '200px';
+                balloon.style.height = '200px';
+                colorIndex = 0;
+                balloon.style.backgroundColor = colors[colorIndex];
+            } else {
+                balloon.style.width = (currentSize + 10) + 'px';
+                balloon.style.height = (currentSize + 10) + 'px';
+                changeColor();
+            }
+        });
+
+        // Event listener for mouse leaving the balloon
+        balloon.addEventListener('mouseleave', shrinkBalloon);
+    </script>
+</body>
+</html>
+
+<style>
+    .balloon {
+        width: 200px;
+        height: 200px;
+        background-color: red;
+        border-radius: 50%; /* Makes the div a circle */
+        position: relative;
+        transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
+    }
+</style>
