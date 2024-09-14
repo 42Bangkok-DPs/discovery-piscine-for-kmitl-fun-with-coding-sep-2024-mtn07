@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Calculator</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" id="leftOperand" placeholder="Left operand" />
+        <select id="operator">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+            <option value="%">%</option>
+        </select>
+        <input type="text" id="rightOperand" placeholder="Right operand" />
+        <input type="submit" value="Try me!" id="calculateBtn" />
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $("#calculateBtn").click(function() {
+                const leftOperand = parseInt($("#leftOperand").val());
+                const operator = $("#operator").val();
+                const rightOperand = parseInt($("#rightOperand").val());
+
+                if (isNaN(leftOperand) || isNaN(rightOperand) || leftOperand < 0 || rightOperand < 0) {
+                    alert('Error :(');
+                    return;
+                }
+
+                let result;
+                switch (operator) {
+                    case '+':
+                        result = leftOperand + rightOperand;
+                        break;
+                    case '-':
+                        result = leftOperand - rightOperand;
+                        break;
+                    case '*':
+                        result = leftOperand * rightOperand;
+                        break;
+                    case '/':
+                        if (rightOperand === 0) {
+                            alert("It's over 9000!");
+                            return;
+                        }
+                        result = leftOperand / rightOperand;
+                        break;
+                    case '%':
+                        if (rightOperand === 0) {
+                            alert("It's over 9000!");
+                            return;
+                        }
+                        result = leftOperand % rightOperand;
+                        break;
+                    default:
+                        alert('Error :(');
+                        return;
+                }
+
+                alert(`Result: ${result}`);
+            });
+
+            setInterval(() => {
+                alert('Please, use me...');
+            }, 30000);
+        });
+    </script>
+</body>
+</html>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f4f4f4;
+    }
+    .calculator {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    input[type="text"], select {
+        padding: 10px;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+    input[type="text"] {
+        width: 150px;
+    }
+    select {
+        width: 60px; 
+    }
+    input[type="submit"] {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    input[type="submit"]:hover {
+        background-color: #218838;
+    }
+</style>
