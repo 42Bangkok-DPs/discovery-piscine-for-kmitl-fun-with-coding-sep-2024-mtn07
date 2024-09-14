@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Balloon</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div id="balloon" class="balloon"></div>
+
+    <script>
+        $(document).ready(function() {
+            const colors = ['red', 'green', 'blue'];
+            let colorIndex = 0;
+
+            function changeColor() {
+                colorIndex = (colorIndex + 1) % colors.length;
+                $('#balloon').css('background-color', colors[colorIndex]);
+            }
+
+            function shrinkBalloon() {
+                const currentSize = parseInt($('#balloon').css('width'));
+                if (currentSize > 200) {
+                    $('#balloon').css({
+                        'width': (currentSize - 5) + 'px',
+                        'height': (currentSize - 5) + 'px',
+                        'background-color': colors[(colorIndex - 1 + colors.length) % colors.length]
+                    });
+                    colorIndex = (colorIndex - 1 + colors.length) % colors.length;
+                }
+            }
+
+            $('#balloon').click(function() {
+                const currentSize = parseInt($(this).css('width'));
+                if (currentSize >= 420) {
+                    $(this).css({
+                        'width': '200px',
+                        'height': '200px',
+                        'background-color': colors[0]
+                    });
+                    colorIndex = 0;
+                } else {
+                    $(this).css({
+                        'width': (currentSize + 10) + 'px',
+                        'height': (currentSize + 10) + 'px'
+                    });
+                    changeColor();
+                }
+            });
+
+            $('#balloon').mouseleave(shrinkBalloon);
+        });
+    </script>
+</body>
+</html>
+
+<style>
+    .balloon {
+        width: 200px;
+        height: 200px;
+        background-color: red;
+        border-radius: 50%; 
+        position: relative;
+        transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
+    }
+</style>
