@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basic Calculator</title>
+    <title>Calculator</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
@@ -23,12 +23,17 @@
     <script>
         $(document).ready(function() {
             $("#calculateBtn").click(function() {
-                const leftOperand = parseInt($("#leftOperand").val());
+                const leftOperandVal = $("#leftOperand").val().trim();
+                const rightOperandVal = $("#rightOperand").val().trim();
                 const operator = $("#operator").val();
-                const rightOperand = parseInt($("#rightOperand").val());
 
-                if (isNaN(leftOperand) || isNaN(rightOperand) || leftOperand < 0 || rightOperand < 0) {
+                const leftOperand = parseInt(leftOperandVal);
+                const rightOperand = parseInt(rightOperandVal);
+
+                //add check input
+                if (isNaN(leftOperand) || isNaN(rightOperand) || leftOperand < 0 || rightOperand < 0 || !/^\d+$/.test(leftOperandVal) || !/^\d+$/.test(rightOperandVal)) {
                     alert('Error :(');
+                    console.log('Error :(');
                     return;
                 }
 
@@ -46,6 +51,7 @@
                     case '/':
                         if (rightOperand === 0) {
                             alert("It's over 9000!");
+                            console.log("It's over 9000!");
                             return;
                         }
                         result = leftOperand / rightOperand;
@@ -53,16 +59,19 @@
                     case '%':
                         if (rightOperand === 0) {
                             alert("It's over 9000!");
+                            console.log("It's over 9000!");
                             return;
                         }
                         result = leftOperand % rightOperand;
                         break;
                     default:
                         alert('Error :(');
+                        console.log('Error :(');
                         return;
                 }
 
                 alert(`Result: ${result}`);
+                console.log(`Result: ${result}`);
             });
 
             setInterval(() => {
